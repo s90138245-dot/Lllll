@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مدرس یزدی | همراه آموزشی تو</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+</head>
+<body>
+<header class="header">
+<div class="header-top">
+<div class="logo">🎓 مدرس یزدی</div>
+<div class="badge">نسخه ۱.۰ | هفتم تا نهم</div>
+</div>
+<p class="slogan">گام‌به‌گام، نمونه سوال، خلاصه درس، فلش‌کارت و آزمون — همه یک‌جا</p>
+<div class="search-box">
+<input id="globalSearch" oninput="globalSearch(this.value)" placeholder="جست‌وجو کن... مثلا: مجموعه‌ها، فارسی، فشار...">
+</div>
+</header>
+<nav class="tabs">
+<button class="tab active" onclick="showPage('home',this)">🏠 خانه</button>
+<button class="tab" onclick="showPage('gam',this)">📖 گام‌به‌گام</button>
+<button class="tab" onclick="showPage('nemoone',this)">📝 نمونه سوال</button>
+<button class="tab" onclick="showPage('kholase',this)">📚 خلاصه درس</button>
+<button class="tab" onclick="showPage('flash',this)">🧠 فلش‌کارت</button>
+<button class="tab" onclick="showPage('azmon',this)">⏱️ آزمون آنلاین</button>
+<button class="tab" onclick="showPage('barname',this)">✅ برنامه‌ریز</button>
+</nav>
+<main>
+<section id="home" class="page active">
+<div class="grid-stats">
+<div class="stat"><b id="st-gam">۱۲</b><span>گام‌به‌گام</span></div>
+<div class="stat"><b id="st-nem">۱۸</b><span>نمونه سوال</span></div>
+<div class="stat"><b id="st-flash">۲۴</b><span>فلش‌کارت</span></div>
+<div class="stat"><b id="st-azmon">۱۰</b><span>سوال آزمون</span></div>
+</div>
+<h2>پایه‌ات رو انتخاب کن</h2>
+<div class="paye-row">
+<button onclick="filterPaye('هفتم')">هفتم</button>
+<button onclick="filterPaye('هشتم')">هشتم</button>
+<button class="on" onclick="filterPaye('نهم')">نهم</button>
+</div>
+<div class="cards">
+<div class="card" onclick="showPage('gam',null,'gam')"><h3>📖 گام‌به‌گام کتاب</h3><p>حل قدم‌به‌قدم فعالیت‌ها، کار در کلاس و تمرین‌های کتاب درسی با توضیح فارسی ساده.</p></div>
+<div class="card" onclick="showPage('nemoone',null)"><h3>📝 بانک نمونه سوال</h3><p>سوالات نوبت اول و دوم، شبه‌نهایی و جواب تشریحی برای مرور شب امتحان.</p></div>
+<div class="card" onclick="showPage('kholase',null)"><h3>📚 جزوه و خلاصه</h3><p>نکته‌های مهم هر فصل، فرمول‌ها و جدول‌های مقایسه‌ای برای جمع‌بندی سریع.</p></div>
+<div class="card" onclick="showPage('flash',null)"><h3>🧠 فلش‌کارت هوشمند</h3><p>بزن، حدس بزن، برگردون. بهترین روش حفظ لغت، تعریف و فرمول.</p></div>
+<div class="card" onclick="showPage('azmon',null)"><h3>⏱️ آزمون زمان‌دار</h3><p>خودت رو با تایمر امتحان کن و آخرش کارنامه با درصد بگیر.</p></div>
+<div class="card" onclick="showPage('barname',null)"><h3>✅ برنامه مطالعاتی</h3><p>برای امروزت هدف بذار، تیک بزن و پیشرفتت رو ببین. اطلاعاتت ذخیره می‌مونه.</p></div>
+</div>
+<div class="tip">💡 روش زیاد کردنش: فایل script.js رو باز کن، بخش DB رو پیدا کن و هر چقدر سوال یا درس جدید می‌خوای کپی و جای‌گذاری کن. لازم نیست html رو دست بزنی.</div>
+</section>
+<section id="gam" class="page">
+<h2>📖 گام‌به‌گام</h2>
+<div class="filters">
+<select id="gamPaye" onchange="renderGam()"><option>هفتم</option><option>هشتم</option><option selected>نهم</option></select>
+<select id="gamDars" onchange="renderGam()"><option value="همه">همه درس‌ها</option><option>ریاضی</option><option>علوم</option><option>فارسی</option><option>عربی</option><option>زبان</option></select>
+</div>
+<div id="gamList" class="list"></div>
+</section>
+<section id="nemoone" class="page">
+<h2>📝 نمونه سوال امتحانی</h2>
+<div class="filters">
+<select id="nemDars" onchange="renderNem()"><option value="همه">همه</option><option>ریاضی</option><option>علوم</option><option>فارسی</option></select>
+</div>
+<div id="nemList" class="list"></div>
+</section>
+<section id="kholase" class="page">
+<h2>📚 خلاصه و جزوه</h2>
+<div id="kholaseList" class="list"></div>
+</section>
+<section id="flash" class="page">
+<h2>🧠 فلش‌کارت</h2>
+<p class="hint">روی کارت بزن تا برگرده. با دکمه بعدی و قبلی جلو برو.</p>
+<div class="flash-wrap">
+<div class="flash-card" id="flashCard" onclick="flipFlash()">
+<div class="flash-front" id="flashQ">سوال</div>
+<div class="flash-back" id="flashA">جواب</div>
+</div>
+<div class="flash-btns">
+<button onclick="prevFlash()">قبلی</button>
+<span id="flashNum">۱ / ۱</span>
+<button onclick="nextFlash()">بعدی</button>
+</div>
+<div class="filters"><select id="flashDars" onchange="renderFlash()"><option value="همه">همه</option><option>ریاضی</option><option>علوم</option><option>فارسی</option><option>زبان</option></select></div>
+</div>
+</section>
+<section id="azmon" class="page">
+<h2>⏱️ آزمون آنلاین مدرس یزدی</h2>
+<div class="quiz-box">
+<div class="quiz-info"><span>⏳ زمان: <b id="timer">۱۰:۰۰</b></span><span>تعداد: ۱۰ سوال</span></div>
+<button class="start-btn" id="startQuizBtn" onclick="startQuiz()">شروع آزمون ریاضی نهم</button>
+<div id="quizList"></div>
+<button class="start-btn hidden" id="finishBtn" onclick="finishQuiz()">ثبت و دیدن کارنامه</button>
+<div id="karname" class="karname hidden"></div>
+</div>
+</section>
+<section id="barname" class="page">
+<h2>✅ برنامه‌ریز مطالعاتی</h2>
+<div class="planner">
+<div class="add-row"><input id="taskInput" placeholder="مثلا: حل ۲۰ تمرین مجموعه‌ها..."><button onclick="addTask()">＋ اضافه</button></div>
+<div class="progress"><div id="progBar"></div></div>
+<p id="progText" class="hint"></p>
+<ul id="taskList" class="tasks"></ul>
+<button class="clear" onclick="clearTasks()">پاک کردن همه</button>
+</div>
+</section>
+</main>
+<footer>ساخته‌شده با ❤️ در یزد — مدرس یزدی | برای افزودن درس جدید فقط به فایل script.js سطر اضافه کن</footer>
+<script src="script.js"></script>
+</body>
+</html>
